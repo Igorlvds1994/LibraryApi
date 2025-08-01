@@ -12,19 +12,19 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfiguration {
 
-    @Value("{spring.datasource.url}")
+    @Value("${spring.datasource.url}")
     String url;
-    @Value("{spring.datasource.username}")
+    @Value("${spring.datasource.username}")
     String username;
-    @Value("{spring.datasource.password}")
+    @Value("${spring.datasource.password}")
     String password;
-    @Value("{spring.datasource.driver-class-name}")
+    @Value("${spring.datasource.driver-class-name}")
     String driver;
 
-    @Bean
+ //   @Bean
     public DataSource dataSource() {
 
-        DriverManagerDataSource ds = new DriverManagerDataSource();
+        DriverManagerDataSource ds = new DriverManagerDataSource(); // Bean Padrão
 
         ds.setUrl(url);
         ds.setUsername(username);
@@ -35,11 +35,27 @@ public class DatabaseConfiguration {
 
     }
 
+    /**
+     * configuracao Hikari
+     * https://github.com/brettwooldridge/HikariCP
+     * @return
+     */
+    @Bean
     public DataSource hikariDataSource() {
         HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
         config.setDriverClassName(driver);
+
+        config.setMaximumPoolSize(10); // exemplo maximo de conexões liberadas
+        config.setMinimumIdle(1);// tamanho inicial
+        config.setPoolName("libraryapi-db-pool");
+        config.setMaxLifetime(600000); // HikariCP
+        config.setConnectionTimeout(100000);
+        config.setConnectionTestQuery("SELECT 1 FROM DUAL"); // Query simples e rapida só para teste com banco
+
+
 
         return new HikariDataSource(config);
 
