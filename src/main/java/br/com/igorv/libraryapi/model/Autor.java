@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,11 +30,19 @@ public class Autor {
     @Column(name = "nacionalidade" , length = 50, nullable = false)
     private String nacionalidade;
 
+    @OneToMany(mappedBy = "autor")
+    private List<Livro> livros;
+
     @Deprecated
     public Autor() {
 
     }
 
-
-
+    public Autor(Long id, String nome, String nacionalidade, LocalDate dataNascimento, List<Livro> livros) {
+        this.id = id;
+        this.nome = nome;
+        this.nacionalidade = nacionalidade;
+        this.dataNascimento = dataNascimento;
+        this.livros = livros;
+    }
 }

@@ -28,6 +28,7 @@ public class DatabaseConfiguration {
 
         ds.setUrl(url);
         ds.setUsername(username);
+        ds.setPassword(password);
         ds.setDriverClassName(driver);
 
         return ds;
