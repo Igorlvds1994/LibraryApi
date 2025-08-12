@@ -65,7 +65,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void deletarPorIdTest() {
-        Long id = Long.parseLong("1");
+        Long id = Long.parseLong("10");
         repository.deleteById(id);
 
     }

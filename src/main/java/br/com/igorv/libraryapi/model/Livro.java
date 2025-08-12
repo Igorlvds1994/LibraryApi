@@ -17,8 +17,8 @@ import java.time.LocalDate;
 public class Livro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "autor_seq")
-    @SequenceGenerator(name = "autor_seq", sequenceName = "autor_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "livro_seq")
+    @SequenceGenerator(name = "livro_seq", sequenceName = "livro_sequence", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -39,7 +39,7 @@ public class Livro {
     private BigDecimal preco;
     //private BigDecimal preco; mais preciso
 
-    @ManyToOne  //muitos livros para um autor
+    @ManyToOne //(cascade = CascadeType.ALL)
     @JoinColumn(name = "autor_id")
     private Autor autor;
 
