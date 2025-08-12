@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "livro")
-@Data // Contem a @Getter @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsContructor entre outras
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Livro {
