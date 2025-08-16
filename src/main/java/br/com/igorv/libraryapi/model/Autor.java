@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "autor")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "livros")
 public class Autor {
 
     @Id
@@ -32,8 +32,10 @@ public class Autor {
     @Column(name = "nacionalidade" , length = 50, nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor")
-    private List<Livro> livros;
+    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY) // Poderia colocar cascade = CacasdeType.ALL para quando persistir um Autor persistir os livros junto
+    private List<Livro> livros;    // Não precisaria do salveAll().
+                                   // Por padrao esta FetchType.LAZY) para ToMany (para muitos)
+                                  // Se colocar TechType.EAGER ele vai trazer com Autor todos seus livros é capaz que limita a aplicação e pesa
 
     @Deprecated
     public Autor() {

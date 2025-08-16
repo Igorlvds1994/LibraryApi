@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "autor")
 public class Livro {
 
     @Id
@@ -39,7 +41,9 @@ public class Livro {
     private BigDecimal preco;
     //private BigDecimal preco; mais preciso
 
-    @ManyToOne //(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY) // FetchType.EAGER que tras junto um livro e autor ja vem por padrao quanto a relação é para um
+                                       //LAZY é carregamento lento, só vai carregar se eu estiver dentro de uma transação
+                                       // (cascade = CascadeType.ALL) faz operações em cascata
     @JoinColumn(name = "autor_id")
     private Autor autor;
 
